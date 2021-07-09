@@ -13,6 +13,7 @@ import java.util.ArrayList;
 
 public class DBHelper extends SQLiteOpenHelper {
 
+
     private static final int DATABASE_Ver = 1;
     private static final String DATABASE_NAME = "task.db";
 
@@ -27,21 +28,22 @@ public class DBHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String createTableSql = "CREATE TABLE " + TABLE_TASK +  "("
+        String createTableSql = "CREATE TABLE " + TABLE_TASK + "("
                 + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
                 + COLUMN_DATE + " TEXT,"
                 + COLUMN_DESCRIPTION + " TEXT )";
         db.execSQL(createTableSql);
-        Log.i("info" ,"created tables");
+        Log.i("info", "created tables");
 
     }
-/*
-        CREATE TABLE Task(_id INTEGER PRIMARY KEY AUTOINCREMENT,
-                            description TEXT,
-                            date TEXT)
+
+    /*
+            CREATE TABLE Task(_id INTEGER PRIMARY KEY AUTOINCREMENT,
+                                description TEXT,
+                                date TEXT)
 
 
- */
+     */
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         // Drop older table if existed
@@ -49,7 +51,8 @@ public class DBHelper extends SQLiteOpenHelper {
         // Create table(s) again
         onCreate(db);
     }
-    public void insertTask(String description, String date){
+
+    public void insertTask(String description, String date) {
 
         // Get an instance of the database for writing
         SQLiteDatabase db = this.getWritableDatabase();
@@ -65,7 +68,8 @@ public class DBHelper extends SQLiteOpenHelper {
         // Close the database connection
         db.close();
     }
-//    public ArrayList<String> getTaskContent() {
+
+    //    public ArrayList<String> getTaskContent() {
 //        // Create an ArrayList that holds String objects
 //        ArrayList<String> tasks = new ArrayList<String>();
 //        // Select all the tasks' description
@@ -96,52 +100,50 @@ public class DBHelper extends SQLiteOpenHelper {
 //
 //        return tasks;
 //    }
-    public ArrayList<Task> getTasks("ASC") {
-        ArrayList<Task> tasks = new ArrayList<Task>();
-        String selectQuery = "SELECT " + COLUMN_ID + ", "
-                + COLUMN_DESCRIPTION + ", "
-                + COLUMN_DATE
-                + " FROM " + TABLE_TASK
-                +" ORDER BY "+ COLUMN_DESCRIPTION + " ASC " ;
+    public ArrayList<Task> getTasks(boolean isAscend) {
 
-        SQLiteDatabase db = this.getReadableDatabase();
-            Cursor ASC = db.rawQuery(selectQuery, null);
-            if (ASC.moveToFirst()) {
+        ArrayList<Task> tasks = new ArrayList<Task>();
+        if (isAscend == true) {
+            String selectQuery = "SELECT " + COLUMN_ID + ", "
+                    + COLUMN_DESCRIPTION + ", "
+                    + COLUMN_DATE
+                    + " FROM " + TABLE_TASK
+                    + " ORDER BY " + COLUMN_DESCRIPTION + " ASC ";
+
+            SQLiteDatabase db = this.getReadableDatabase();
+            Cursor cursor = db.rawQuery(selectQuery, null);
+            if (cursor.moveToFirst()) {
                 do {
-                    int id = ASC.getInt(0);
-                    String description = ASC.getString(1);
-                    String date = ASC.getString(2);
+                    int id = cursor.getInt(0);
+                    String description = cursor.getString(1);
+                    String date = cursor.getString(2);
                     Task obj = new Task(id, description, date);
                     tasks.add(obj);
-                } while (ASC.moveToNext());
+                } while (cursor.moveToNext());
             }
-            ASC.close();
+            cursor.close();
             db.close();
+        } else {
+            String selectQuery = "SELECT " + COLUMN_ID + ", "
+                    + COLUMN_DESCRIPTION + ", "
+                    + COLUMN_DATE
+                    + " FROM " + TABLE_TASK
+                    + " ORDER BY " + COLUMN_DESCRIPTION + " DESC ";
+
+            SQLiteDatabase db = this.getReadableDatabase();
+            Cursor cursor = db.rawQuery(selectQuery, null);
+            if (cursor.moveToFirst()) {
+                do {
+                    int id = cursor.getInt(0);
+                    String description = cursor.getString(1);
+                    String date = cursor.getString(2);
+                    Task obj = new Task(id, description, date);
+                    tasks.add(obj);
+                } while (cursor.moveToNext());
+            }
+            cursor.close();
+            db.close();
+        }
         return tasks;
     }
-    public ArrayList<Task> getTasks("DESC") {
-        String selectQueryDESC = "SELECT " + COLUMN_ID + ", "
-                + COLUMN_DESCRIPTION + ", "
-                + COLUMN_DATE
-                + " FROM " + TABLE_TASK
-                +" ORDER BY "+ COLUMN_DESCRIPTION + " DESC " ;
-
-        ArrayList<Task> tasks = new ArrayList<Task>();
-
-        Cursor DESC = db.rawQuery(selectQueryDESC, null);
-
-            if (DESC.moveToFirst()) {
-        do {
-            int id = DESC.getInt(0);
-            String description = DESC.getString(1);
-            String date = DESC.getString(2);
-            Task obj = new Task(id, description, date);
-            tasks.add(obj);
-        } while (DESC.moveToNext());
-    }
-            DESC.close();
-            db.close();
-}
-        return tasks;
-                }
 }

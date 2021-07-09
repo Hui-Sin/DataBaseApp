@@ -4,4 +4,8 @@
     <string name="task">Task</string>
     <string name="insert">Insert</string>
     <string name="get_tasks">Get Tasks</string>
+    <string-array name="orderby">
+        <item>Ascending</item>
+        <item>Descending</item>
+    </string-array>
 </resources>

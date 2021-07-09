@@ -22,6 +22,6 @@ public class Task {
     @NonNull
     @Override
     public String toString() {
-        return id + ". " + description + " - " + date;
+        return description + " - " + date;
     }
 }
