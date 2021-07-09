@@ -18,10 +18,10 @@ public class Task {
     public String getDescription() { return description; }
 
     public String getDate() { return date;}
+
     @NonNull
     @Override
     public String toString() {
         return id + "\n" + description + "\n" + date;
     }
-
 }

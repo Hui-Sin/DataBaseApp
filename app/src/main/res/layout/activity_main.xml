@@ -26,8 +26,8 @@
         android:layout_weight="1" />
 
     <ListView
-        android:id="@+id/lv"
+        android:id="@+id/lvtask"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_weight="1" />
 </LinearLayout>
