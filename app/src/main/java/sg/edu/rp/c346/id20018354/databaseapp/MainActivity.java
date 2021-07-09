@@ -64,9 +64,9 @@ public class MainActivity extends AppCompatActivity {
                 DBHelper db = new DBHelper(MainActivity.this);
                 ArrayList<Task> data = db.getTasks();
                 db.close();
-                String txt = "";
+//                String txt = "";
                 for (int i = 0; i < data.size(); i++) {
-//                    Log.d("Database Content", i +". "+data.get(i));
+                    Log.d("Database Content", i +". "+data.get(i));
 //                    txt += i + ". " + data.get(i) + "\n";
                     alTasks.add(data.get(i).toString());
                 }
