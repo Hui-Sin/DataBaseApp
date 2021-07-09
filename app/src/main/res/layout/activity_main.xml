@@ -5,25 +5,62 @@
     android:orientation="vertical">
 
 
-    <Button
-        android:id="@+id/btnInsert"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_weight="1"
-        android:text="Insert" />
+        android:orientation="horizontal">
 
-    <Button
-        android:id="@+id/btnGetTasks"
+        <EditText
+            android:id="@+id/editTextTask"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ems="10"
+            android:hint="@string/task"
+            android:inputType="textPersonName"
+            android:autofillHints="" />
+
+        <EditText
+            android:id="@+id/editTextTaskDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ems="10"
+            android:hint="@string/date"
+            android:inputType="textPersonName"
+            android:autofillHints="" />
+    </LinearLayout>
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:text="Get Tasks" />
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btnInsert"
+            style="@style/Widget.AppCompat.Button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/insert" />
+
+        <Button
+            android:id="@+id/btnGetTasks"
+            style="@style/Widget.AppCompat.Button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/get_tasks" />
+    </LinearLayout>
 
     <TextView
         android:id="@+id/tvResults"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1" />
+        android:layout_weight="1"
+        android:background="#3FC3FF" />
 
     <ListView
         android:id="@+id/lvtask"

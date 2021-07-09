@@ -96,27 +96,52 @@ public class DBHelper extends SQLiteOpenHelper {
 //
 //        return tasks;
 //    }
-    public ArrayList<Task> getTasks() {
+    public ArrayList<Task> getTasks("ASC") {
         ArrayList<Task> tasks = new ArrayList<Task>();
         String selectQuery = "SELECT " + COLUMN_ID + ", "
                 + COLUMN_DESCRIPTION + ", "
                 + COLUMN_DATE
-                + " FROM " + TABLE_TASK;
+                + " FROM " + TABLE_TASK
+                +" ORDER BY "+ COLUMN_DESCRIPTION + " ASC " ;
 
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.rawQuery(selectQuery, null);
-
-        if (cursor.moveToFirst()) {
-            do {
-                int id = cursor.getInt(0);
-                String description = cursor.getString(1);
-                String date = cursor.getString(2);
-                Task obj = new Task(id, description, date);
-                tasks.add(obj);
-            } while (cursor.moveToNext());
-        }
-        cursor.close();
-        db.close();
+            Cursor ASC = db.rawQuery(selectQuery, null);
+            if (ASC.moveToFirst()) {
+                do {
+                    int id = ASC.getInt(0);
+                    String description = ASC.getString(1);
+                    String date = ASC.getString(2);
+                    Task obj = new Task(id, description, date);
+                    tasks.add(obj);
+                } while (ASC.moveToNext());
+            }
+            ASC.close();
+            db.close();
         return tasks;
     }
+    public ArrayList<Task> getTasks("DESC") {
+        String selectQueryDESC = "SELECT " + COLUMN_ID + ", "
+                + COLUMN_DESCRIPTION + ", "
+                + COLUMN_DATE
+                + " FROM " + TABLE_TASK
+                +" ORDER BY "+ COLUMN_DESCRIPTION + " DESC " ;
+
+        ArrayList<Task> tasks = new ArrayList<Task>();
+
+        Cursor DESC = db.rawQuery(selectQueryDESC, null);
+
+            if (DESC.moveToFirst()) {
+        do {
+            int id = DESC.getInt(0);
+            String description = DESC.getString(1);
+            String date = DESC.getString(2);
+            Task obj = new Task(id, description, date);
+            tasks.add(obj);
+        } while (DESC.moveToNext());
+    }
+            DESC.close();
+            db.close();
+}
+        return tasks;
+                }
 }

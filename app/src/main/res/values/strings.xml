@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">DataBaseApp</string>
+    <string name="date">Date</string>
+    <string name="task">Task</string>
+    <string name="insert">Insert</string>
+    <string name="get_tasks">Get Tasks</string>
 </resources>

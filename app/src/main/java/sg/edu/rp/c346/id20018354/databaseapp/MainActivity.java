@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -14,6 +15,7 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
+    EditText etTask,etDate;
     Button btnInsert,btnGetTasks;
     TextView tvResults;
     ListView lvTasks;
@@ -26,6 +28,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        etTask=findViewById(R.id.editTextTask);
+        etDate=findViewById(R.id.editTextTaskDate);
         btnInsert = findViewById(R.id.btnInsert);
         btnGetTasks=findViewById(R.id.btnGetTasks);
         tvResults=findViewById(R.id.tvResults);
@@ -38,9 +42,10 @@ public class MainActivity extends AppCompatActivity {
         btnInsert.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                String task = etTask.getText().toString();
+                String date = etDate.getText().toString();
                 DBHelper db = new DBHelper(MainActivity.this);
-                db.insertTask("Submit RJ", "25 Apr 2021");
+                db.insertTask(task, date);
             }
         });
 //        btnGetTasks.setOnClickListener(new View.OnClickListener(){
@@ -62,15 +67,16 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 alTasks.clear();
                 DBHelper db = new DBHelper(MainActivity.this);
-                ArrayList<Task> data = db.getTasks();
+                if
+                ArrayList<Task> data = db.getTasks("ASC");
                 db.close();
-//                String txt = "";
+                String txt = "";
                 for (int i = 0; i < data.size(); i++) {
                     Log.d("Database Content", i +". "+data.get(i));
-//                    txt += i + ". " + data.get(i) + "\n";
+                    txt += i + ". " + data.get(i) + "\n";
                     alTasks.add(data.get(i).toString());
                 }
-//                tvResults.setText(txt);
+                tvResults.setText(txt);
                 aaTasks.notifyDataSetChanged();
             }
         });
